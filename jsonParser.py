@@ -30,7 +30,7 @@ if __name__ == '__main__':
     try:
         j = json.loads(sys.stdin.read())
     except ValueError, e:
-        print >>sys.stderr, 'Could not load JSON object from stdin.'
+        print >>sys.stderr, 'Tidak dapat memanggil objek JSON dari stdin.'
         sys.exit(1)
 
     nilaiNya(j, map(re.compile, sys.argv[1:]))
