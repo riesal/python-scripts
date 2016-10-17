@@ -11,6 +11,7 @@
 # format result as restful, not file
 
 import requests, json
+# you may have to install requests module via: pip install 'requests[security]'
 
 response = requests.get("https://test.httpapi.com/api/resellers/promo-details.json?auth-userid=your-reseller-id&api-key=your-key")
 response.raise_for_status()
