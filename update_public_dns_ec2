@@ -15,16 +15,16 @@ def add_cname_record(mesin,nama):
 
     route53.change_resource_record_sets(
         HostedZoneId='your-aws-route53-id',
-	      ChangeBatch={
+	ChangeBatch={
             'Changes': [
                 {
                     'Action': 'UPSERT',
-		                'ResourceRecordSet': {
+		    'ResourceRecordSet': {
                         'Name': nama,
-		                    'Type': 'CNAME',
-		                    'ResourceRecords': [
+		        'Type': 'CNAME',
+		        'ResourceRecords': [
                             {
-		                            'Value': instances_dns
+		                'Value': instances_dns
                             }
                         ],
                         'TTL':  300
