@@ -1,5 +1,7 @@
 # update AWS EC2 public dns for selected instances
 # using python 2.7 and AWS Lambda
+# IAM role: ec2:start,ec2:stop,ec2:DescribeInstance,route53:*
+# Place your Lambda function under same subnet of your ec2 instances
 # riesal[at]gmail[dot]com
 
 from __future__ import print_function
