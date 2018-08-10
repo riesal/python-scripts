@@ -13,6 +13,8 @@ def lambda_handler(event, context):
       ec2.stop_instances(InstanceIds=instances)
   except ClientError as error:
       print 'Sorry, can not find some of instances, stopping aborted.'
+  finally:
+      print 'all of EC2 staging instances was stopped.'
 
   rds_conn = boto3.client('rds',region_name=region)
   for stg in rds_instances:
@@ -21,5 +23,5 @@ def lambda_handler(event, context):
           rds_conn.stop_db_instance(DBInstanceIdentifier=stg)
       except ClientError as error:
           print 'Sorry, i can not find RDS instance of ' + str(stg)
-
-  print 'all of rds staging instances was stopped.'
+      finally:
+          print 'all of rds staging instances was stopped.'
