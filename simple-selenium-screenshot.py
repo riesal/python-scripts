@@ -15,10 +15,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
-from pyvirtualdisplay import Display
+#from pyvirtualdisplay import Display
 
-display = Display(visible=0, size=(1024, 800))
-display.start()
+#display = Display(visible=0, size=(1024, 800))
+#display.start()
 
 user=""
 pwd=""
@@ -33,6 +33,7 @@ options.add_argument("--start-maximized")
 
 #options.binary_location = "/usr/bin/google-chrome"
 driver = webdriver.Chrome(chrome_options=options)
+driver.maximize_window()
 driver.implicitly_wait(3)
 driver.get('https://your-website.com')
 try:
@@ -45,8 +46,8 @@ finally:
     elem.send_keys(user)
     elem=driver.find_element_by_css_selector("input.btn.search")
     elem.send_keys(Keys.RETURN)
-    driver.maximize_window()
-    driver.implicitly_wait(30)
+    driver.implicitly_wait(10)
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     driver.save_screenshot('skrinsut.png')
     driver.close()
     driver.quit()
