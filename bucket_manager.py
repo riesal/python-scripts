@@ -33,7 +33,7 @@ def delete_bucket():
 
 def grant_user():
     # define user arn dan bucket name
-    user_arn_ku = str(sys.argv[2]) #user_arn_ku = 'arn:aws:iam::88888888:/user/your_username'
+    user_arn_ku = str(sys.argv[2]) #user_arn_ku = 'arn:aws:iam::88888888:/user/username_kamu'
     bucket_name = str(sys.argv[3]) #bucket_name = 'my-bucket'
 
     # connect bucket
@@ -48,7 +48,7 @@ def grant_user():
 
 def revoke_user():
     # define user arn dan bucket name
-    user_arn_ku = str(sys.argv[2]) #user_arn_ku = 'arn:aws:iam::88888888:/user/your_username'
+    user_arn_ku = str(sys.argv[2]) #user_arn_ku = 'arn:aws:iam::88888888:/user/username_kamu'
     bucket_name = str(sys.argv[3]) #bucket_name = 'my-bucket'
 
     # connect bucket
