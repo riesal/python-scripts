@@ -1,10 +1,9 @@
+#!/tmp/tes/bin/python
+# using python 2.7
 # finaccel
 # cd /tmp && virtualenv tes
 # source /tmp/tes/bin/activate
 # pip install boto3 awspolicy
-
-#!/tmp/tes/bin/python
-# using python 2.7
 
 import os, sys, getopt
 import boto3
