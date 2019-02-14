@@ -5,7 +5,7 @@
 # source /tmp/tes/bin/activate
 # pip install boto3 awspolicy
 
-import os, sys, getopt
+import os, sys, getopt, argparse
 import boto3
 import awspolicy
 from awspolicy import BucketPolicy
@@ -61,6 +61,9 @@ def revoke_user():
     ganti_permission.save()
     ganti_permission.source_policy.save()
 
+# rencana pakai function_map dan parser tapi belum di test.
+# function_map = { 'list': list_bucket, 'create': create_bucket, 'delete': delete_bucket, 'grant': grant_user, 'revoke': revoke_user }
+# parser = argparse.ArgumentParser() parser.add_argument('command', nargs=1) parser.add_argument('--args', nargs='+') args = parser.parse_args() function = function_map[args.command[0]] if args.args: function(args.args) else: function()
 
 if __name__ == "__main__":
     print "Number of arguments:", len(sys.argv), "arguments."
