@@ -3,35 +3,83 @@
 # source /tmp/tes/bin/activate
 # pip install boto3 awspolicy
 
+#!/tmp/tes/bin/python
+# using python 2.7
+
+import os, sys, getopt
 import boto3
 import awspolicy
 from awspolicy import BucketPolicy
 
-def list()
-  s3 = boto3.client('s3')
-  response = s3.list_buckets()
-  buckets = [bucket['Name'] for bucket in response['Buckets']]
-  print("The bucket list: %s" % buckets)
+AWS_DEFAULT_REGION = 'ap-southeast-1'
+os.environ['AWS_DEFAULT_REGION'] = 'ap-southeast-1'
 
-def create()
-  s3 = boto3.client('S3')
-  response = s3.create_bucket(Bucket='my-bucket')
+def list_bucket():
+    s3 = boto3.client('s3')
+    response = s3.list_buckets()
+    buckets = [bucket['Name'] for bucket in response['Buckets']]
+    print("The bucket list: %s" % buckets)
 
-def delete()
-  s3 = boto3.client('S3')
-  response = s3.delete_bucket(Bucket='my-bucket')
+def create_bucket():
+    bucket_name = str(sys.argv[2])
+    #print "Bucket name is: ", bucket_name
+    s3 = boto3.client('s3')
+    response = s3.create_bucket(Bucket=bucket_name, CreateBucketConfiguration={'LocationConstraint': AWS_DEFAULT_REGION})
 
-def grant()
-  # define user arn dan bucket name
-  user_arn_ku = 'arn:aws:iam::88888888:/user/your_username'
-  bucket_name = 'my-bucket'
+def delete_bucket():
+    bucket_name = str(sys.argv[2])
+    #print "Bucket name is: ", bucket_name
+    s3 = boto3.client('s3')
+    response = s3.delete_bucket(Bucket=bucket_name, CreateBucketConfiguration={'LocationConstraint': AWS_DEFAULT_REGION})
 
-  # connect dan set policy
-  s3 = boto3.client('S3')
-  bucket_policy = BucketPolicy(serviceModule=s3_client, resourceIdentifer=bucket_name)
-  ganti_permission = bucket_policy.select_statement('AutomatedRestrictiveAccess')
+def grant_user():
+    # define user arn dan bucket name
+    user_arn_ku = str(sys.argv[2]) #user_arn_ku = 'arn:aws:iam::88888888:/user/your_username'
+    bucket_name = str(sys.argv[3]) #bucket_name = 'my-bucket'
 
-  # append dan save user
-  ganti_permission.Principal['AWS'].append(user_arn_ku)
-  ganti_permission.save()
-  ganti_permission.source_policy.save()
+    # connect bucket
+    s3 = boto3.client('s3')
+    bucket_policy = BucketPolicy(serviceModule=s3_client, resourceIdentifer=bucket_name)
+    ganti_permission = bucket_policy.select_statement('AutomatedRestrictiveAccess')
+
+    # append dan save bucket policy
+    ganti_permission.Principal['AWS'].append(user_arn_ku)
+    ganti_permission.save()
+    ganti_permission.source_policy.save()
+
+def revoke_user():
+    # define user arn dan bucket name
+    user_arn_ku = str(sys.argv[2]) #user_arn_ku = 'arn:aws:iam::88888888:/user/your_username'
+    bucket_name = str(sys.argv[3]) #bucket_name = 'my-bucket'
+
+    # connect bucket
+    s3 = boto3.client('s3')
+    bucket_policy = BucketPolicy(serviceModule=s3_client, resourceIdentifer=bucket_name)
+    ganti_permission = bucket_policy.select_statement('AutomatedRestrictiveAccess')
+
+    # revoke dan save bucket policy
+    ganti_permission.Principal['AWS'].delete(user_arn_ku)
+    ganti_permission.save()
+    ganti_permission.source_policy.save()
+
+
+if __name__ == "__main__":
+    print "Number of arguments:", len(sys.argv), "arguments."
+    print "Argument list:", str(sys.argv)
+    print "\n"
+
+    if "list" in str(sys.argv[1]):
+        list_bucket()
+        sys.exit()
+    elif "create" in str(sys.argv[1]):
+        create_bucket()
+        sys.exit()
+    elif "delete" in str(sys.argv[1]):
+        delete_bucket()
+        sys.exit()
+    elif "grant" in str(sys.argv[1]):
+        grant_user()
+        sys.exit()
+    elif "revoke" in str(sys.argv[1]):
+        revoke_user()
+        sys.exit()
